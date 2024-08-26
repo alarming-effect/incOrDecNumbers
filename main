@@ -1,0 +1,30 @@
+from math import comb
+from functools import lru_cache
+
+@lru_cache(None)  # Cache results to optimize repeated calculations
+def binomial(n, k):
+    """Compute the binomial coefficient C(n, k)."""
+    if k == 0:
+        return 1
+    if k == 1:
+        return n
+    return comb(n, k)
+
+def total_inc_dec(x):
+#Calculate the total count of unique increasing and decreasing numbers with that amt of digit
+    if x < 0:
+        raise ValueError("The digit length x must be non-negative")
+
+    #number of increasing sequences
+    increasing = binomial(x + 9, x)
+    
+    #number of decreasing sequences
+    decreasing = binomial(x + 10, x)
+    
+    #number of duplicate sequences
+    duplicates = 10 * x + 1
+    
+    #total count of **unique** increasing or decreasing numbers
+    total_count = increasing + decreasing - duplicates
+    
+    return total_count
